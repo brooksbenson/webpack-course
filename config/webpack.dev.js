@@ -8,10 +8,11 @@ module.exports = {
   output: {
     filename: 'main-bundle.js',
     path: path.join(__dirname, '..', 'dist'),
-    publicPath: './'
+    publicPath: 'js'
   },
   devServer: {
-    contentBase: 'dist'
+    contentBase: 'dist',
+    overlay: true
   },
   module: {
     rules: [
@@ -20,6 +21,17 @@ module.exports = {
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader' }
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: { name: '[name].html' }
+          },
+          { loader: 'extract-loader' },
+          { loader: 'html-loader' }
         ]
       }
     ]
